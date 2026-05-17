@@ -1,0 +1,10 @@
+{
+  "name": "SiagaMobil",
+  "short_name": "SiagaMobil",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f4efe5",
+  "theme_color": "#0d6b61",
+  "description": "Learn how to check your car condition with bilingual Indonesian-English guidance."
+}

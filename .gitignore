@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.vercel/
+node_modules/
+Disbursement - Requirements - MVP.pdf
+disbursement_prd_extracted.txt

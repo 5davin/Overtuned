@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d3f43" />
+    <title>Suara 2 / Suara 3 Practice Generator</title>
+    <link rel="stylesheet" href="/harmony/styles.css" />
+  </head>
+  <body>
+    <main class="studio-shell">
+      <section class="workspace" aria-labelledby="app-title">
+        <header class="topbar">
+          <div>
+            <p class="brand">Harmony Practice</p>
+            <h1 id="app-title">Suara 2 / Suara 3 Practice Generator</h1>
+          </div>
+          <div class="status-card" aria-live="polite">
+            <span id="status-label">Ready</span>
+            <strong id="status-value">Upload a clear lead vocal</strong>
+          </div>
+        </header>
+
+        <section class="upload-panel" aria-labelledby="upload-title">
+          <div>
+            <h2 id="upload-title">Upload Song</h2>
+            <p>
+              Choose a clear lead-vocal recording. The app analyzes the melody in your browser and creates guide tones for practice.
+            </p>
+          </div>
+          <label class="drop-zone" for="audio-file">
+            <input id="audio-file" type="file" accept="audio/*" />
+            <span class="drop-icon" aria-hidden="true">+</span>
+            <span>
+              <strong id="file-label">Select audio file</strong>
+              <small>WAV, MP3, M4A, or any format your browser can decode</small>
+            </span>
+          </label>
+          <button id="demo-btn" class="demo-btn" type="button">Load Demo Tone</button>
+        </section>
+
+        <section class="control-grid" aria-label="Harmony controls">
+          <div class="control-panel">
+            <div class="panel-head">
+              <h2>Song Setup</h2>
+              <span id="analysis-summary">No melody analyzed yet</span>
+            </div>
+
+            <div class="field-grid">
+              <label>
+                <span>Key</span>
+                <select id="key-select"></select>
+              </label>
+              <label>
+                <span>Scale</span>
+                <select id="scale-select">
+                  <option value="major">Major</option>
+                  <option value="minor">Natural minor</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="timeline-card">
+              <div class="timeline-head">
+                <span>Melody confidence</span>
+                <strong id="confidence-label">0%</strong>
+              </div>
+              <canvas id="timeline" width="960" height="170" aria-label="Detected melody and harmony timeline"></canvas>
+            </div>
+          </div>
+
+          <aside class="control-panel practice-panel">
+            <div class="panel-head">
+              <h2>Practice Mix</h2>
+              <span id="duration-label">0:00</span>
+            </div>
+
+            <div class="part-list">
+              <article class="part-card original-card">
+                <div>
+                  <h3>Original</h3>
+                  <p>Uploaded recording</p>
+                </div>
+                <label>
+                  <span>Volume</span>
+                  <input id="original-volume" type="range" min="0" max="1" step="0.01" value="0.75" />
+                </label>
+                <button class="play-btn" type="button" data-play="original">Play Original</button>
+              </article>
+
+              <article class="part-card">
+                <div>
+                  <h3>Suara 2</h3>
+                  <p>Default: diatonic third above</p>
+                </div>
+                <label>
+                  <span>Preset</span>
+                  <select id="suara2-preset"></select>
+                </label>
+                <label>
+                  <span>Volume</span>
+                  <input id="suara2-volume" type="range" min="0" max="1" step="0.01" value="0.82" />
+                </label>
+                <button class="play-btn" type="button" data-play="suara2">Play Suara 2</button>
+              </article>
+
+              <article class="part-card">
+                <div>
+                  <h3>Suara 3</h3>
+                  <p>Default: diatonic third below</p>
+                </div>
+                <label>
+                  <span>Preset</span>
+                  <select id="suara3-preset"></select>
+                </label>
+                <label>
+                  <span>Volume</span>
+                  <input id="suara3-volume" type="range" min="0" max="1" step="0.01" value="0.78" />
+                </label>
+                <button class="play-btn" type="button" data-play="suara3">Play Suara 3</button>
+              </article>
+            </div>
+
+            <div class="transport-row">
+              <button id="mix-btn" class="primary-btn" type="button">Play Practice Mix</button>
+              <button id="stop-btn" class="secondary-btn" type="button">Stop</button>
+            </div>
+          </aside>
+        </section>
+      </section>
+    </main>
+
+    <script src="/harmony/app.js" defer></script>
+  </body>
+</html>

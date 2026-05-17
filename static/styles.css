@@ -1,0 +1,628 @@
+:root {
+  --bg: #f6efe2;
+  --paper: rgba(255, 251, 245, 0.92);
+  --ink: #1e1b18;
+  --muted: #6f6458;
+  --accent: #8d2e24;
+  --accent-deep: #5c1711;
+  --forest: #214e3d;
+  --border: rgba(47, 36, 28, 0.12);
+  --shadow: 0 28px 70px rgba(47, 27, 11, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(141, 46, 36, 0.16), transparent 32%),
+    radial-gradient(circle at bottom right, rgba(33, 78, 61, 0.16), transparent 28%),
+    linear-gradient(180deg, #f5ecdd 0%, #efe3d2 100%);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.page-shell {
+  width: min(1200px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 32px 0 48px;
+}
+
+.page-shell,
+.room-layout,
+.chat-grid,
+.sidebar,
+.game-panel,
+.chat-column {
+  min-width: 0;
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
+  margin-bottom: 28px;
+}
+
+.hero h1 {
+  margin: 8px 0 12px;
+  max-width: 720px;
+  font-size: clamp(2.4rem, 5vw, 4.6rem);
+  line-height: 0.95;
+}
+
+.hero-copy {
+  margin: 0;
+  max-width: 700px;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.eyebrow,
+.section-label,
+.meta-label {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.hero-chip,
+.pill,
+.status-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(30, 27, 24, 0.06);
+  color: var(--ink);
+  font-size: 0.88rem;
+}
+
+.panel {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(8px);
+}
+
+.panel-wide {
+  padding: 28px;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.panel-head.compact {
+  margin-bottom: 18px;
+}
+
+.panel-head h2,
+.chat-head h3 {
+  margin: 6px 0 0;
+  font-size: 1.65rem;
+}
+
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.form-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.form-grid label,
+.role-grid label {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+}
+
+input,
+select {
+  width: 100%;
+  border: 1px solid rgba(47, 36, 28, 0.16);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 13px 14px;
+  color: var(--ink);
+}
+
+fieldset {
+  border: 1px solid rgba(47, 36, 28, 0.1);
+  border-radius: 22px;
+  margin: 0;
+  padding: 18px;
+}
+
+legend {
+  padding: 0 8px;
+  color: var(--accent-deep);
+}
+
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 14px;
+}
+
+.callout,
+.role-card,
+.config-summary,
+.action-box,
+.empty-state {
+  border-radius: 22px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(47, 36, 28, 0.08);
+}
+
+.callout {
+  color: var(--muted);
+}
+
+.role-guide {
+  line-height: 1.6;
+}
+
+.primary-btn,
+.secondary-btn,
+.toggle-btn,
+.vote-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 120ms ease, opacity 120ms ease, background 120ms ease;
+}
+
+.primary-btn:hover,
+.secondary-btn:hover,
+.toggle-btn:hover,
+.vote-btn:hover {
+  transform: translateY(-1px);
+}
+
+.primary-btn {
+  padding: 14px 20px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+  color: #fff8f4;
+}
+
+.secondary-btn,
+.toggle-btn,
+.vote-btn {
+  padding: 12px 16px;
+  background: rgba(30, 27, 24, 0.08);
+  color: var(--ink);
+}
+
+.toggle-btn.active {
+  background: rgba(141, 46, 36, 0.18);
+  color: var(--accent-deep);
+}
+
+.room-layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 20px;
+}
+
+.sidebar,
+.game-panel {
+  padding: 22px;
+}
+
+.sidebar {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+}
+
+.sidebar-block {
+  display: grid;
+  gap: 12px;
+}
+
+.link-box {
+  display: flex;
+  gap: 10px;
+}
+
+.link-box input {
+  font-size: 0.92rem;
+  min-width: 0;
+}
+
+.player-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.player-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.player-list li.dead {
+  opacity: 0.58;
+}
+
+.badge {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(33, 78, 61, 0.12);
+  color: var(--forest);
+  font-size: 0.78rem;
+}
+
+.badge.creator {
+  background: rgba(141, 46, 36, 0.14);
+  color: var(--accent-deep);
+}
+
+.phase-banner {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px;
+  border-radius: 24px;
+  margin-bottom: 18px;
+  background:
+    linear-gradient(135deg, rgba(33, 78, 61, 0.9), rgba(16, 34, 28, 0.95)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
+  color: #f5efe5;
+}
+
+.phase-banner .section-label {
+  color: rgba(245, 239, 229, 0.72);
+}
+
+.phase-banner h2 {
+  margin: 6px 0 8px;
+  font-size: clamp(1.8rem, 3vw, 3rem);
+}
+
+.phase-copy {
+  margin: 0;
+  max-width: 620px;
+  color: rgba(245, 239, 229, 0.86);
+  line-height: 1.5;
+}
+
+.timer-card {
+  min-width: 130px;
+  padding: 14px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  text-align: right;
+}
+
+.timer-card span {
+  display: block;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  opacity: 0.72;
+}
+
+.timer-card strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 2rem;
+}
+
+.action-panel {
+  margin-bottom: 18px;
+}
+
+.action-box h3,
+.config-summary h3,
+.role-card h3 {
+  margin: 0 0 10px;
+  font-size: 1.15rem;
+}
+
+.target-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.target-grid button.active {
+  background: rgba(141, 46, 36, 0.18);
+  color: var(--accent-deep);
+}
+
+.chat-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.8fr;
+  gap: 16px;
+}
+
+.chat-column {
+  display: grid;
+  gap: 14px;
+}
+
+.chat-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+}
+
+.chat-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.messages {
+  min-height: 320px;
+  max-height: 420px;
+  overflow-y: auto;
+  display: grid;
+  gap: 12px;
+  padding: 6px 4px 4px;
+}
+
+.message {
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(47, 36, 28, 0.08);
+}
+
+.message.system {
+  border-left: 4px solid rgba(141, 46, 36, 0.5);
+}
+
+.message.pack {
+  border-left: 4px solid rgba(33, 78, 61, 0.5);
+}
+
+.message-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.message p {
+  margin: 0;
+  line-height: 1.45;
+}
+
+.chat-form {
+  display: flex;
+  gap: 10px;
+}
+
+.chat-form input {
+  flex: 1;
+  min-width: 0;
+}
+
+.config-summary dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px 14px;
+}
+
+.settings-instructions {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(47, 36, 28, 0.1);
+}
+
+.settings-instructions h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.settings-instructions p {
+  margin: 0 0 10px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.config-summary dt {
+  color: var(--muted);
+}
+
+.config-summary dd {
+  margin: 0;
+  text-align: right;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 960px) {
+  .page-shell {
+    width: min(100%, calc(100% - 20px));
+    padding: 20px 0 28px;
+  }
+
+  .room-layout,
+  .chat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero,
+  .phase-banner,
+  .panel-head,
+  .chat-head,
+  .link-box,
+  .chat-form {
+    flex-direction: column;
+  }
+
+  .timer-card,
+  .link-box button,
+  .chat-form button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .sidebar,
+  .game-panel,
+  .panel-wide {
+    padding: 18px;
+  }
+
+  .messages {
+    min-height: 260px;
+    max-height: 340px;
+  }
+}
+
+@media (max-width: 720px) {
+  body {
+    background:
+      radial-gradient(circle at top left, rgba(141, 46, 36, 0.2), transparent 38%),
+      radial-gradient(circle at bottom right, rgba(33, 78, 61, 0.18), transparent 34%),
+      linear-gradient(180deg, #f5ecdd 0%, #efe3d2 100%);
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 11vw, 3.2rem);
+    line-height: 1;
+  }
+
+  .hero-copy {
+    font-size: 0.98rem;
+  }
+
+  .hero-chip,
+  .status-dot {
+    width: 100%;
+  }
+
+  .panel {
+    border-radius: 22px;
+  }
+
+  .phase-banner {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .phase-banner h2 {
+    font-size: 1.6rem;
+  }
+
+  .timer-card strong {
+    font-size: 1.6rem;
+  }
+
+  .role-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .player-list li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .target-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .vote-btn,
+  .primary-btn,
+  .secondary-btn,
+  .toggle-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 520px) {
+  .page-shell {
+    width: calc(100% - 16px);
+    padding: 14px 0 22px;
+  }
+
+  .panel-head h2,
+  .chat-head h3 {
+    font-size: 1.32rem;
+  }
+
+  .sidebar,
+  .game-panel,
+  .panel-wide,
+  .callout,
+  .role-card,
+  .config-summary,
+  .action-box,
+  .empty-state {
+    padding: 14px;
+  }
+
+  .link-box,
+  .chat-form {
+    gap: 8px;
+  }
+
+  .messages {
+    min-height: 220px;
+    max-height: 300px;
+  }
+
+  .message,
+  .player-list li {
+    padding: 12px;
+  }
+
+  .role-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .config-summary dl {
+    grid-template-columns: 1fr;
+  }
+
+  .config-summary dd {
+    text-align: left;
+  }
+}

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#8d2e24" />
+    <title>Moonhall: Online Werewolf</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Moonhall</p>
+          <h1>Host a full Werewolf game in the browser.</h1>
+          <p class="hero-copy">
+            Create a room, share the invite link, let players join with guest nicknames, and let the system run the night actions,
+            discussion rounds, and village votes.
+          </p>
+        </div>
+        <div class="hero-chip">System moderated</div>
+      </header>
+
+      <main id="app"></main>
+    </div>
+
+    <template id="create-template">
+      <section class="panel panel-wide">
+          <div class="panel-head">
+          <div>
+            <p class="section-label">Create Room</p>
+            <h2>Configure the match</h2>
+          </div>
+          <div class="pill-row">
+            <span class="pill">Guest join</span>
+            <span class="pill">Expanded roles</span>
+            <span class="pill">Real-time phases</span>
+          </div>
+        </div>
+
+        <form id="create-room-form" class="form-grid">
+          <label>
+            <span>Room title</span>
+            <input name="title" type="text" maxlength="40" placeholder="Friday Night Werewolf" value="Moonhall Match" required />
+          </label>
+
+          <label>
+            <span>Your nickname</span>
+            <input name="creatorName" type="text" maxlength="24" placeholder="Host name" required />
+          </label>
+
+          <label>
+            <span>Player count</span>
+            <input name="expectedPlayers" id="expectedPlayers" type="number" min="4" max="18" value="8" required />
+          </label>
+
+          <label>
+            <span>Reveal roles on death</span>
+            <select name="revealRolesOnDeath">
+              <option value="true" selected>Yes</option>
+              <option value="false">No</option>
+            </select>
+          </label>
+
+          <fieldset class="role-grid">
+            <legend>Roles</legend>
+            <label>
+              <span>Werewolves</span>
+              <input name="role-werewolf" type="number" min="1" max="6" value="2" required />
+            </label>
+            <label>
+              <span>Seers</span>
+              <input name="role-seer" type="number" min="0" max="2" value="1" required />
+            </label>
+            <label>
+              <span>Doctors</span>
+              <input name="role-doctor" type="number" min="0" max="2" value="1" required />
+            </label>
+            <label>
+              <span>Bodyguards</span>
+              <input name="role-bodyguard" type="number" min="0" max="2" value="0" required />
+            </label>
+            <label>
+              <span>Minions</span>
+              <input name="role-minion" type="number" min="0" max="2" value="0" required />
+            </label>
+            <label>
+              <span>Villagers</span>
+              <input name="role-villager" type="number" min="0" max="16" value="4" required />
+            </label>
+          </fieldset>
+
+          <div class="callout role-guide">
+            <strong>Role guide:</strong> Werewolves kill at night. Seers inspect one player. Doctors may save one player, including themselves.
+            Bodyguards protect one other player at night. Minions support the werewolf team, know who the werewolves are, and help them win by voting.
+          </div>
+
+          <fieldset class="role-grid">
+            <legend>Timers (seconds)</legend>
+            <label>
+              <span>Night</span>
+              <input name="nightSeconds" type="number" min="15" max="180" value="45" required />
+            </label>
+            <label>
+              <span>Discussion</span>
+              <input name="discussionSeconds" type="number" min="20" max="300" value="90" required />
+            </label>
+            <label>
+              <span>Voting</span>
+              <input name="votingSeconds" type="number" min="15" max="180" value="45" required />
+            </label>
+          </fieldset>
+
+          <div class="callout" id="role-summary"></div>
+          <button class="primary-btn" type="submit">Create room</button>
+        </form>
+      </section>
+    </template>
+
+    <template id="room-template">
+      <section class="room-layout">
+        <aside class="panel sidebar">
+          <div class="panel-head compact">
+            <div>
+              <p class="section-label">Room</p>
+              <h2 id="room-title">Loading...</h2>
+            </div>
+            <span class="status-dot" id="phase-badge">Lobby</span>
+          </div>
+
+          <div class="sidebar-block">
+            <p class="meta-label">Invite link</p>
+            <div class="link-box">
+              <input id="share-link" readonly />
+              <button id="copy-link-btn" class="secondary-btn" type="button">Copy</button>
+            </div>
+          </div>
+
+          <div class="sidebar-block" id="lobby-join-block"></div>
+          <div class="sidebar-block" id="role-card"></div>
+
+          <div class="sidebar-block">
+            <p class="meta-label">Players</p>
+            <ul id="player-list" class="player-list"></ul>
+          </div>
+        </aside>
+
+        <section class="panel game-panel">
+          <div class="phase-banner">
+            <div>
+              <p class="section-label">Game Phase</p>
+              <h2 id="phase-title">Loading...</h2>
+              <p id="phase-copy" class="phase-copy"></p>
+            </div>
+            <div class="timer-card">
+              <span>Time left</span>
+              <strong id="timer-value">0s</strong>
+            </div>
+          </div>
+
+          <div id="action-panel" class="action-panel"></div>
+
+          <div class="chat-grid">
+            <div class="chat-column">
+              <div class="chat-head">
+                <div>
+                  <p class="meta-label">Events & chat</p>
+                  <h3>Table feed</h3>
+                </div>
+                <div class="chat-toggle">
+                  <button id="chat-public-toggle" class="toggle-btn active" type="button">Public</button>
+                  <button id="chat-pack-toggle" class="toggle-btn hidden" type="button">Pack</button>
+                </div>
+              </div>
+
+              <div id="messages" class="messages"></div>
+
+              <form id="chat-form" class="chat-form">
+                <input id="chat-input" type="text" maxlength="240" placeholder="Type a message..." />
+                <button class="primary-btn" type="submit">Send</button>
+              </form>
+            </div>
+
+            <div class="chat-column">
+              <div class="chat-head">
+                <div>
+                  <p class="meta-label">Configuration</p>
+                  <h3>Match settings</h3>
+                </div>
+              </div>
+              <div id="config-summary" class="config-summary"></div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </template>
+
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>
