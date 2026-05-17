@@ -61,3 +61,4 @@ Then open [http://127.0.0.1:8010](http://127.0.0.1:8010) in your browser.
 - SiagaMobil is now standalone and is no longer routed through the Werewolf server.
 - The project now includes `vercel.json` and `api/index.py` so the same app can be routed through a single Vercel Python function.
 - Important deployment caveat: because room state is still in memory, a Vercel deployment is suitable for demos but not durable multiplayer production use. For reliable public hosting, the next step is moving room/game state to shared storage such as Redis, Postgres, or Vercel KV.
+# Overtuned
